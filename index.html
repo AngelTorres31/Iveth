@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi Elotito 💕</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cinzel:wght@400;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blush: #f4a7b9;
+            --rose: #e8637a;
+            --deep: #c0314d;
+            --gold: #d4a853;
+            --cream: #fdf6f0;
+            --dark: #1a0a10;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: var(--dark);
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        /* ===== PANTALLA: CRÉDITOS ===== */
+        #pantalla-creditos {
+            position: fixed;
+            inset: 0;
+            background: #08080f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            padding: 3rem 1.5rem;
+            overflow: hidden;
+        }
+
+        .credits-glow {
+            position: absolute;
+            top: -80px; left: 50%;
+            transform: translateX(-50%);
+            width: 320px; height: 320px;
+            background: radial-gradient(circle, rgba(180,100,255,0.18) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .credits-glow2 {
+            position: absolute;
+            bottom: -60px; left: 50%;
+            transform: translateX(-50%);
+            width: 260px; height: 200px;
+            background: radial-gradient(circle, rgba(255,120,180,0.10) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .credits-inner {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 340px;
+            width: 100%;
+        }
+
+        .credits-top-tag {
+            font-family: 'Cinzel', serif;
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(200,150,255,0.5);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 0.3s;
+        }
+
+        .credits-num {
+            font-family: 'Cinzel', serif;
+            font-size: 96px;
+            font-weight: 500;
+            line-height: 1;
+            background: linear-gradient(135deg, #e0aaff 0%, #ff85c8 60%, #ffb347 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.25rem;
+            letter-spacing: -2px;
+            opacity: 0;
+            animation: fadeUp 1.2s ease forwards 0.6s;
+        }
+
+        .credits-nombre {
+            font-family: 'Cinzel', serif;
+            font-size: 28px;
+            font-weight: 400;
+            color: #f0e8ff;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 1s;
+        }
+
+        .credits-fecha {
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            color: rgba(200,160,255,0.45);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 1.3s;
+        }
+
+        .credits-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 1.6s;
+        }
+
+        .credits-divider span {
+            flex: 1;
+            height: 0.5px;
+            background: rgba(200,150,255,0.15);
+        }
+
+        .credits-divider i {
+            font-style: normal;
+            font-size: 10px;
+            color: rgba(200,150,255,0.3);
+            letter-spacing: 2px;
+        }
+
+        .credito-fila {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 0.55rem 0;
+            border-bottom: 0.5px solid rgba(255,255,255,0.04);
+            gap: 12px;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards;
+        }
+
+        .credito-fila:nth-child(5) { animation-delay: 1.9s; }
+        .credito-fila:nth-child(6) { animation-delay: 2.2s; }
+        .credito-fila:nth-child(7) { animation-delay: 2.5s; }
+        .credito-fila:last-of-type { border-bottom: none; }
+
+        .c-label {
+            font-family: 'Cinzel', serif;
+            font-size: 10px;
+            color: rgba(180,130,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            white-space: nowrap;
+        }
+
+        .c-val {
+            font-family: 'Dancing Script', cursive;
+            font-size: 16px;
+            color: rgba(240,220,255,0.75);
+            text-align: right;
+        }
+
+        .btn-continuar {
+            display: block;
+            width: 100%;
+            margin-top: 2rem;
+            padding: 12px 24px;
+            background: transparent;
+            border: 0.5px solid rgba(200,130,255,0.3);
+            border-radius: 8px;
+            color: rgba(220,170,255,0.85);
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 3.2s;
+        }
+
+        .btn-continuar:hover {
+            background: rgba(200,130,255,0.07);
+            border-color: rgba(200,130,255,0.5);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== PANTALLA: GALERÍA ===== */
+        #pantalla-galeria {
+            position: fixed;
+            inset: 0;
+            background: #0d0608;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 90;
+        }
+
+        .galeria-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, rgba(192,49,77,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .galeria-numero {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            color: rgba(255,255,255,0.2);
+        }
+
+        .galeria-titulo {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.4rem;
+            color: rgba(244, 167, 185, 0.4);
+        }
+
+        .imagen-wrapper {
+            position: relative;
+            width: min(420px, 85vw);
+            aspect-ratio: 4/5;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow:
+                0 0 0 1px rgba(244,167,185,0.15),
+                0 30px 80px rgba(0,0,0,0.8),
+                0 0 100px rgba(192,49,77,0.1);
+        }
+
+        .imagen-slide {
+            position: absolute;
+            inset: 0;
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.2s ease;
+        }
+
+        .imagen-slide.active { opacity: 1; }
+
+        .imagen-caption {
+            margin-top: 28px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.4);
+            font-style: italic;
+            text-align: center;
+            letter-spacing: 1px;
+            height: 24px;
+            transition: opacity 0.8s ease;
+        }
+
+        .barra-progreso {
+            position: absolute;
+            bottom: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+
+        .prog-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            transition: all 0.4s ease;
+        }
+
+        .prog-dot.active {
+            background: var(--blush);
+            box-shadow: 0 0 10px var(--blush);
+            transform: scale(1.3);
+        }
+
+        .timer-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--rose), var(--blush));
+            width: 0%;
+        }
+
+        .timer-line.run {
+            width: 100%;
+            transition: width 7s linear;
+        }
+
+        /* ===== PANTALLA: MENSAJE FINAL ===== */
+        #pantalla-mensaje {
+            position: fixed;
+            inset: 0;
+            background: #08080f;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 80;
+            padding: 3rem 2rem;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .mensaje-glow {
+            position: absolute;
+            top: -100px; left: 50%;
+            transform: translateX(-50%);
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(232,99,122,0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .mensaje-num {
+            font-family: 'Cinzel', serif;
+            font-size: 80px;
+            font-weight: 400;
+            line-height: 1;
+            background: linear-gradient(135deg, #e0aaff 0%, #ff85c8 60%, #ffb347 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            animation: fadeUp 1.2s ease forwards 0.3s;
+        }
+
+        .mensaje-nombre {
+            font-family: 'Cinzel', serif;
+            font-size: 22px;
+            letter-spacing: 6px;
+            color: rgba(240,220,255,0.6);
+            text-transform: uppercase;
+            margin-top: 0.25rem;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 0.7s;
+        }
+
+        .mensaje-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            max-width: 380px;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 1s;
+        }
+
+        .mensaje-divider span {
+            flex: 1;
+            height: 0.5px;
+            background: rgba(200,150,255,0.15);
+        }
+
+        .mensaje-divider i {
+            font-style: normal;
+            font-size: 10px;
+            color: rgba(200,150,255,0.3);
+            letter-spacing: 2px;
+            font-family: 'Cinzel', serif;
+        }
+
+        .mensaje-texto {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(1.6rem, 5vw, 2.2rem);
+            color: rgba(255,255,255,0.9);
+            line-height: 1.6;
+            max-width: 480px;
+            opacity: 0;
+            animation: fadeUp 1.5s ease forwards 1.3s;
+            text-shadow: 0 0 40px rgba(244,167,185,0.3);
+        }
+
+        .mensaje-firma {
+            margin-top: 1.5rem;
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: rgba(200,150,255,0.4);
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 2.2s;
+        }
+
+        .mensaje-corazones {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .corazon-flotante {
+            position: absolute;
+            font-size: 1rem;
+            animation: flotar linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes flotar {
+            0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+            10%  { opacity: 0.4; }
+            90%  { opacity: 0.4; }
+            100% { transform: translateY(-100px) scale(1.2); opacity: 0; }
+        }
+        .btn-reiniciar {
+    margin-top: 2.5rem;
+    padding: 12px 28px;
+    background: transparent;
+    border: 0.5px solid rgba(200,130,255,0.3);
+    border-radius: 8px;
+    color: rgba(220,170,255,0.6);
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 3s;
+}
+.btn-reiniciar:hover {
+    background: rgba(200,130,255,0.07);
+    border-color: rgba(200,130,255,0.5);
+}
+    </style>
+</head>
+<body>
+
+    <audio id="musica-fondo" loop>
+        <source src="fotos/musica/doja.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- ===== CRÉDITOS ===== -->
+    <div id="pantalla-creditos">
+        <div class="credits-glow"></div>
+        <div class="credits-glow2"></div>
+        <div class="credits-inner">
+            <div class="credits-top-tag">una historia de 21 años</div>
+            <div class="credits-num">21</div>
+            <div class="credits-nombre">Iveth</div>
+            <div class="credits-fecha">06 · 04 · 2026</div>
+
+            <div class="credits-divider">
+                <span></span>
+                <i>✦ créditos ✦</i>
+                <span></span>
+            </div>
+
+            <div class="credito-fila">
+                <span class="c-label">Protagonista</span>
+                <span class="c-val">Iveth</span>
+            </div>
+            <div class="credito-fila">
+                <span class="c-label">Año de estreno</span>
+                <span class="c-val">2005</span>
+            </div>
+            <div class="credito-fila">
+                <span class="c-label">Dirección</span>
+                <span class="c-val">El Destino</span>
+            </div>
+
+            <button class="btn-continuar" id="btn-empezar">Continuar →</button>
+        </div>
+    </div>
+
+    <!-- ===== GALERÍA ===== -->
+    <div id="pantalla-galeria">
+        <div class="galeria-overlay"></div>
+        <div class="galeria-titulo">Iveth</div>
+        <div class="galeria-numero" id="galeria-numero">01 / 07</div>
+
+        <div class="imagen-wrapper">
+            <img class="imagen-slide active" src="fotos/ivet 1.jpeg" alt="">
+            <img class="imagen-slide" src="fotos/iveth 2.jpeg" alt="">
+            <img class="imagen-slide" src="fotos/iveth 3.jpeg" alt="">
+            <img class="imagen-slide" src="fotos/iveth 4.jpeg" alt="">
+            <img class="imagen-slide" src="fotos/iveth 5.jpeg" alt="">
+            <img class="imagen-slide" src="fotos/iveth 6.jpeg" alt="">
+            <img class="imagen-slide" src="fotos/iveth 7.jpeg" alt="">
+            <div class="timer-line" id="timer-line"></div>
+        </div>
+
+        <div class="imagen-caption" id="imagen-caption">💕</div>
+        <div class="barra-progreso" id="barra-progreso"></div>
+    </div>
+
+    <!-- ===== MENSAJE FINAL ===== -->
+    <div id="pantalla-mensaje">
+        <div class="mensaje-glow"></div>
+        <div class="mensaje-corazones" id="mensaje-corazones"></div>
+
+        <div class="mensaje-num">21</div>
+        <div class="mensaje-nombre">Elotito</div>
+
+        <div class="mensaje-divider">
+            <span></span>
+            <i>✦</i>
+            <span></span>
+        </div>
+
+        <div class="mensaje-texto">
+            Feliz cumpleaños,<br>amor mío
+        </div>
+
+        <div class="mensaje-firma">te quiere tu azabache</div>
+        <button class="btn-reiniciar" id="btn-reiniciar">↺ Ver fotos de nuevo</button>
+    </div>
+
+    <script>
+        const captions = ["💕 Elotito","💕 Elotito","💕 Elotito","💕 Elotito","💕 Elotito","💕 Elotito","💕 Elotito"];
+
+        const pantCredi  = document.getElementById('pantalla-creditos');
+        const pantGale   = document.getElementById('pantalla-galeria');
+        const pantMensaj = document.getElementById('pantalla-mensaje');
+
+        const slides     = document.querySelectorAll('.imagen-slide');
+        const totalSlide = slides.length;
+        const barraDiv   = document.getElementById('barra-progreso');
+        const numDiv     = document.getElementById('galeria-numero');
+        const captDiv    = document.getElementById('imagen-caption');
+        const timerLine  = document.getElementById('timer-line');
+
+        let slideActual = 0;
+        let intervaloGal = null;
+
+        // Créditos → Galería
+        document.getElementById('btn-empezar').addEventListener('click', () => {
+            pantCredi.style.display = 'none';
+            pantGale.style.display = 'flex';
+            initGaleria();
+        });
+
+        function resetTimer() {
+            timerLine.classList.remove('run');
+            timerLine.style.width = '0%';
+            timerLine.style.transition = 'none';
+            void timerLine.offsetWidth;
+            setTimeout(() => {
+                timerLine.style.transition = '';
+                timerLine.classList.add('run');
+            }, 30);
+        }
+
+        function initGaleria() {
+            for (let i = 0; i < totalSlide; i++) {
+                const d = document.createElement('div');
+                d.className = 'prog-dot' + (i === 0 ? ' active' : '');
+                barraDiv.appendChild(d);
+            }
+            captDiv.textContent = captions[0];
+            numDiv.textContent  = `01 / ${String(totalSlide).padStart(2,'0')}`;
+            resetTimer();
+
+            intervaloGal = setInterval(() => {
+                avanzarSlide();
+            }, 7000); // ← 7 segundos
+        }
+
+        function avanzarSlide() {
+            slides[slideActual].classList.remove('active');
+            document.querySelectorAll('.prog-dot')[slideActual].classList.remove('active');
+
+            slideActual++;
+
+            if (slideActual >= totalSlide) {
+                clearInterval(intervaloGal);
+                pantGale.style.display = 'none';
+                mostrarMensaje();
+                return;
+            }
+
+            slides[slideActual].classList.add('active');
+            document.querySelectorAll('.prog-dot')[slideActual].classList.add('active');
+            captDiv.style.opacity = 0;
+            setTimeout(() => {
+                captDiv.textContent = captions[slideActual] || '';
+                captDiv.style.opacity = 1;
+            }, 600);
+            numDiv.textContent = `${String(slideActual+1).padStart(2,'0')} / ${String(totalSlide).padStart(2,'0')}`;
+            resetTimer();
+        }
+
+        // Galería → Mensaje final
+        function mostrarMensaje() {
+            pantMensaj.style.display = 'flex';
+            lanzarCorazones();
+        }
+
+        function lanzarCorazones() {
+            const cont = document.getElementById('mensaje-corazones');
+            const emojis = ['💕','💖','💗','💓','✨','💝','🌸'];
+            for (let i = 0; i < 25; i++) {
+                const c = document.createElement('div');
+                c.className = 'corazon-flotante';
+                c.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                c.style.cssText = `
+                    left: ${Math.random() * 100}%;
+                    animation-duration: ${5 + Math.random() * 6}s;
+                    animation-delay: ${Math.random() * 10}s;
+                    font-size: ${0.8 + Math.random() * 1.2}rem;
+                `;
+                cont.appendChild(c);
+            }
+        }
+
+        // Música
+      // Música
+const musicaFondo = document.getElementById('musica-fondo');
+musicaFondo.volume = 0.5;
+musicaFondo.play().catch(() => {
+    // Si el navegador bloquea el autoplay, intenta al primer toque
+    document.addEventListener('click', () => {
+        musicaFondo.play().catch(() => {});
+    }, { once: true });
+});
+document.getElementById('btn-reiniciar').addEventListener('click', () => {
+    // Resetear slides
+    slideActual = 0;
+    slides.forEach(s => s.classList.remove('active'));
+    slides[0].classList.add('active');
+
+    // Resetear dots
+    document.querySelectorAll('.prog-dot').forEach(d => d.classList.remove('active'));
+    document.querySelectorAll('.prog-dot')[0].classList.add('active');
+
+    // Resetear caption y número
+    captDiv.textContent = captions[0];
+    numDiv.textContent = `01 / ${String(totalSlide).padStart(2,'0')}`;
+
+    // Volver a galería
+    pantMensaj.style.display = 'none';
+    pantGale.style.display = 'flex';
+
+    // Reiniciar timer e intervalo
+    clearInterval(intervaloGal);
+    resetTimer();
+    intervaloGal = setInterval(() => avanzarSlide(), 7000);
+});
+    </script>
+</body>
+</html>
